@@ -96,7 +96,7 @@ abstract class Base extends CommandManagerBase {
 											plugin
 										).didChooseRemove())
 									) {
-										removeMenu();
+										await removeMenu();
 									}
 								});
 						})

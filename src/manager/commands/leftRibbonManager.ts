@@ -11,9 +11,9 @@ export default class LeftRibbonManager extends CommandManagerBase {
 		super(plugin, plugin.settings.leftRibbon);
 		this.plugin = plugin;
 
-		this.plugin.settings.leftRibbon.forEach((pair) =>
-			this.addCommand(pair, false)
-		);
+		this.plugin.settings.leftRibbon.forEach((pair) => {
+			void this.addCommand(pair, false);
+		});
 
 		this.plugin.app.workspace.onLayoutReady(() => {
 			// if (this.plugin.settings.showAddCommand) {
@@ -68,8 +68,8 @@ export default class LeftRibbonManager extends CommandManagerBase {
 
 	public reorder(): void {
 		this.plugin.settings.leftRibbon.forEach((pair) => {
-			this.removeCommand(pair, false);
-			this.addCommand(pair, false);
+			void this.removeCommand(pair, false);
+			void this.addCommand(pair, false);
 		});
 	}
 }

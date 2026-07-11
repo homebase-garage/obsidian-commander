@@ -52,7 +52,7 @@ export default class StatusBarManager extends CommandManagerBase {
 									const pair = await chooseNewCommand(
 										this.plugin
 									);
-									this.addCommand(pair);
+									await this.addCommand(pair);
 								});
 						})
 						.showAtMouseEvent(event);
@@ -63,7 +63,7 @@ export default class StatusBarManager extends CommandManagerBase {
 			setIcon(this.addBtn, "plus");
 			this.addBtn.onclick = async (): Promise<void> => {
 				const pair = await chooseNewCommand(this.plugin);
-				this.addCommand(pair);
+				await this.addCommand(pair);
 				this.reorder();
 			};
 			if (this.plugin.settings.showAddCommand)
@@ -118,7 +118,7 @@ export default class StatusBarManager extends CommandManagerBase {
 						this.plugin
 					).didChooseRemove())
 				) {
-					this.removeCommand(pair);
+					await this.removeCommand(pair);
 				}
 			};
 		};
@@ -143,7 +143,7 @@ export default class StatusBarManager extends CommandManagerBase {
 						.setIcon("command")
 						.onClick(async () => {
 							const pair = await chooseNewCommand(this.plugin);
-							this.addCommand(pair);
+							await this.addCommand(pair);
 						});
 				})
 				.addSeparator()
@@ -187,7 +187,7 @@ export default class StatusBarManager extends CommandManagerBase {
 									this.plugin
 								).didChooseRemove())
 							) {
-								this.removeCommand(pair);
+								await this.removeCommand(pair);
 							}
 						});
 				})
@@ -209,7 +209,7 @@ export default class StatusBarManager extends CommandManagerBase {
 		}
 
 		action.addClass("cmdr-ribbon-removing");
-		action.addEventListener("transitionend", async () => {
+		action.addEventListener("transitionend", () => {
 			action.remove();
 			this.actions.delete(pair);
 		});

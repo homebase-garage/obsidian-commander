@@ -43,7 +43,7 @@ export default class CommanderPlugin extends Plugin {
 	public async executeStartupMacros(): Promise<void> {
 		this.settings.macros.forEach((macro, idx) => {
 			if (macro.startup) {
-				this.executeMacro(idx);
+				void this.executeMacro(idx);
 			}
 		});
 	}
@@ -55,7 +55,7 @@ export default class CommanderPlugin extends Plugin {
 		for (const command of macro.macro) {
 			switch (command.action) {
 				case Action.COMMAND: {
-					await this.app.commands.executeCommandById(command.commandId);
+					this.app.commands.executeCommandById(command.commandId);
 					continue;
 				}
 				case Action.DELAY: {
@@ -69,7 +69,7 @@ export default class CommanderPlugin extends Plugin {
 				}
 				case Action.LOOP: {
 					for (let i = 0; i < command.times; i++) {
-						await this.app.commands.executeCommandById(
+						this.app.commands.executeCommandById(
 							command.commandId
 						);
 					}
@@ -129,7 +129,7 @@ export default class CommanderPlugin extends Plugin {
 			updateStyles(this.settings.advancedToolbar);
 			injectIcons(this.settings.advancedToolbar, this);
 
-			this.executeStartupMacros();
+			void this.executeStartupMacros();
 
 			// Push saved commands into the Text Toolbar plugin if it is installed
 			this.manager.textToolbarIntegration.reorder();

@@ -28,7 +28,7 @@ export default class ChooseCustomNameModal extends SuggestModal<string> {
 	}
 
 	public onOpen(): void {
-		super.onOpen();
+		void super.onOpen();
 
 		this.inputEl.value = this.defaultName;
 		const wrapper = createDiv({ cls: "cmdr-name-input-wrapper" });
@@ -47,7 +47,7 @@ export default class ChooseCustomNameModal extends SuggestModal<string> {
 			this.onChooseSuggestion = (item): void => resolve(item);
 			//This is wrapped inside a setTimeout, because onClose is called before onChooseItem
 			this.onClose = (): number =>
-				window.setTimeout(() => reject("No Name selected"), 0);
+				window.setTimeout(() => reject(new Error("No Name selected")), 0);
 		});
 	}
 
