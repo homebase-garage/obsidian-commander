@@ -25,7 +25,6 @@ export default function MacroViewer({
 			);
 
 			plugin.saveSettings();
-			this.forceUpdate();
 			updateMacroCommands(plugin);
 			modal.close();
 		};
@@ -36,7 +35,6 @@ export default function MacroViewer({
 	const handleDelete = (idx: number): void => {
 		macros.splice(idx, 1);
 		plugin.saveSettings();
-		this.forceUpdate();
 		updateMacroCommands(plugin);
 	};
 
