@@ -151,7 +151,7 @@ export function updateMacroCommands(plugin: CommanderPlugin): void {
 			name: macro.name,
 			icon: macro.icon,
 			callback: () => {
-				plugin.executeMacro(Number(idx));
+				void plugin.executeMacro(Number(idx));
 			},
 		});
 	}

@@ -15,7 +15,7 @@ export function confirmDeleteComponent({
 					className="mod-warning"
 					onClick={async (): Promise<void> => {
 						modal.plugin.settings.confirmDeletion = false;
-						modal.plugin.saveSettings();
+						await modal.plugin.saveSettings();
 
 						modal.remove = true;
 						modal.close();

@@ -44,6 +44,19 @@ export default defineConfig(
 	},
 	...obsidianmd.configs.recommended,
 	{
+		files: ['**/*.ts', '**/*.tsx'],
+		rules: {
+			// Preact discards the return value of JSX event handlers at
+			// runtime (unlike React's synthetic events), so async onClick
+			// handlers are safe here - only check non-attribute misuse
+			// (forEach callbacks, addEventListener, Promise executors, etc).
+			'@typescript-eslint/no-misused-promises': [
+				'error',
+				{ checksVoidReturn: { attributes: false } },
+			],
+		},
+	},
+	{
 		files: ['src/main.ts'],
 		rules: {
 			// Renaming this command's id would break existing users' saved hotkeys

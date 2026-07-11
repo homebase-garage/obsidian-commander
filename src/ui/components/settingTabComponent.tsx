@@ -92,7 +92,7 @@ export default function settingTabComponent({
 							}
 							changeHandler={async (value): Promise<void> => {
 								plugin.settings.showAddCommand = !value;
-								plugin.manager.pageHeader.reorder();
+								await plugin.manager.pageHeader.reorder();
 								await plugin.saveSettings();
 							}}
 						/>

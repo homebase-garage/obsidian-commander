@@ -55,7 +55,7 @@ export default function CommandViewer({
 											idx,
 											idx - 1
 										);
-										manager.reorder();
+										void manager.reorder();
 									}}
 									handleDown={(): void => {
 										arrayMoveMutable(
@@ -63,14 +63,14 @@ export default function CommandViewer({
 											idx,
 											idx + 1
 										);
-										manager.reorder();
+										void manager.reorder();
 									}}
 									handleRename={async (
 										name
 									): Promise<void> => {
 										cmd.name = name;
 										await plugin.saveSettings();
-										manager.reorder();
+										await manager.reorder();
 									}}
 									handleNewIcon={async (): Promise<void> => {
 										const newIcon =
@@ -80,7 +80,7 @@ export default function CommandViewer({
 										if (newIcon && newIcon !== cmd.icon) {
 											cmd.icon = newIcon;
 											await plugin.saveSettings();
-											manager.reorder();
+											await manager.reorder();
 										}
 										dispatchEvent(
 											new Event("cmdr-icon-changed")
@@ -104,14 +104,14 @@ export default function CommandViewer({
 										cmd.mode =
 											mode || modes[currentIdx + 1];
 										await plugin.saveSettings();
-										manager.reorder();
+										await manager.reorder();
 									}}
 									handleColorChange={async (
 										color?: string
 									): Promise<void> => {
 										cmd.color = color;
 										await plugin.saveSettings();
-										manager.reorder();
+										await manager.reorder();
 									}}
 								/>
 							);
@@ -140,7 +140,7 @@ export default function CommandViewer({
 						onClick={async (): Promise<void> => {
 							const pair = await chooseNewCommand(plugin);
 							await manager.addCommand(pair);
-							manager.reorder();
+							await manager.reorder();
 						}}
 					>
 						{t("Add command")}
