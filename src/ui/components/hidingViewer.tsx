@@ -18,7 +18,6 @@ export function LeftRibbonHider({
 	const hiddenCommands = plugin.settings.hide.leftRibbon;
 	useEffect(() => {
 		setRibbonCommands(
-			// @ts-expect-error
 			plugin.app.workspace.leftRibbon.items.map((item) => ({
 				name: item.title,
 				icon: item.icon,

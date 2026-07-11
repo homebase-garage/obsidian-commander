@@ -109,6 +109,11 @@ declare module "obsidian" {
 			title: string;
 			callback: () => void;
 		}[];
+		items: {
+			icon: string;
+			title: string;
+			buttonEl: HTMLElement;
+		}[];
 		collapseButtonEl: HTMLElement;
 		ribbonItemsEl: HTMLElement;
 		addRibbonItemButton: (
