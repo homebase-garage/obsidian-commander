@@ -27,14 +27,18 @@ export class FuzzySuggestModal<T> {
 	public app: unknown;
 	protected declare items: T[];
 	public constructor(app: unknown) { this.app = app; }
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- minimal test double, no-op is intentional
 	public open(): void {}
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- minimal test double, no-op is intentional
 	public close(): void {}
 }
 export class SuggestModal<T> {
 	public app: unknown;
 	protected declare items: T[];
 	public constructor(app: unknown) { this.app = app; }
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- minimal test double, no-op is intentional
 	public open(): void {}
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- minimal test double, no-op is intentional
 	public close(): void {}
 }
 export class PluginSettingTab {

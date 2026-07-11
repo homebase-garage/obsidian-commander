@@ -63,4 +63,15 @@ export default defineConfig(
 			'obsidianmd/commands/no-command-in-command-id': 'off',
 		},
 	},
+	{
+		files: ['eslint.config.mts', 'vitest.config.ts', 'src/__tests__/**'],
+		rules: {
+			// These only run under Node (eslint/vitest CLI), never bundled
+			// into main.js or loaded inside Obsidian, so the mobile/runtime
+			// compatibility rationale behind these rules doesn't apply here.
+			'obsidianmd/no-nodejs-modules': 'off',
+			'obsidianmd/no-global-this': 'off',
+			'obsidianmd/prefer-create-el': 'off',
+		},
+	},
 );

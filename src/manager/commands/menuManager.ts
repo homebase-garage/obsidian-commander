@@ -161,7 +161,7 @@ abstract class Base extends CommandManagerBase {
 							const pair = await chooseNewCommand(plugin);
 							commandList.push(pair);
 							await plugin.saveSettings();
-						} catch (error) {
+						} catch {
 							// User cancelled command/icon selection, nothing to do
 						}
 					});
