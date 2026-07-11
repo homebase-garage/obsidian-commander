@@ -55,6 +55,12 @@
 	pointer-events: none;
 }
 
+.cmdr-advanced-toolbar-settings .extra-setting-button.is-disabled {
+	opacity: 0.35;
+	cursor: default;
+	pointer-events: none;
+}
+
 .cmdr-menu-more-options {
 	color: var(--text-muted);
 	position: absolute;

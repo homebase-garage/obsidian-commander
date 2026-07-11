@@ -297,7 +297,11 @@ export default function AdvancedToolbarSettings({
 					</button>
 				)}
 			</div>
-			<div ref={ref} style={{ paddingBottom: "128px" }} />
+			<div
+				ref={ref}
+				className="cmdr-advanced-toolbar-settings"
+				style={{ paddingBottom: "128px" }}
+			/>
 		</Fragment>
 	);
 }
