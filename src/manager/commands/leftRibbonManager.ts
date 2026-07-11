@@ -39,7 +39,7 @@ export default class LeftRibbonManager extends CommandManagerBase {
 			// @ts-expect-error
 			const nativeAction = this.plugin.app.workspace.leftRibbon.items.find(
 				// @ts-expect-error
-				(i) => i.icon === pair.icon && i.name === i.name
+				(i) => i.icon === pair.icon && i.name === pair.name
 			);
 			if (nativeAction) {
 				nativeAction.buttonEl.style.color =
@@ -62,13 +62,13 @@ export default class LeftRibbonManager extends CommandManagerBase {
 		// @ts-expect-error
 		const nativeAction = this.plugin.app.workspace.leftRibbon.items.find(
 			// @ts-expect-error
-			(i) => i.icon === pair.icon && i.name === i.name
+			(i) => i.icon === pair.icon && i.name === pair.name
 		);
 		if (nativeAction) {
 			nativeAction.buttonEl.remove();
 		}
 		// @ts-expect-error
-		app.workspace.leftRibbon.items.remove(nativeAction);
+		this.plugin.app.workspace.leftRibbon.items.remove(nativeAction);
 	}
 
 	public reorder(): void {

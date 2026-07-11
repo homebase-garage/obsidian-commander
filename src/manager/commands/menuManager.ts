@@ -163,8 +163,7 @@ abstract class Base extends CommandManagerBase {
 							commandList.push(pair);
 							await plugin.saveSettings();
 						} catch (error) {
-							//Do some proper handling here
-							console.log(error);
+							// User cancelled command/icon selection, nothing to do
 						}
 					});
 			});

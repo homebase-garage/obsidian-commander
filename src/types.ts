@@ -1,4 +1,5 @@
 import { h } from "preact";
+import { Command, PluginManifest } from "obsidian";
 
 export enum Action {
 	COMMAND,

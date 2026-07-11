@@ -19,7 +19,7 @@ export function LeftRibbonHider({
 	useEffect(() => {
 		setRibbonCommands(
 			// @ts-expect-error
-			app.workspace.leftRibbon.items.map((item) => ({
+			plugin.app.workspace.leftRibbon.items.map((item) => ({
 				name: item.title,
 				icon: item.icon,
 			}))

@@ -100,8 +100,8 @@ export default function CommandComponent({
 	const owningPlugin = plugin.app.plugins.manifests[owningPluginID!];
 	const isInternal = !owningPlugin;
 	const isChecked =
-		cmd.hasOwnProperty("checkCallback") ||
-		cmd.hasOwnProperty("editorCheckCallback");
+		Object.prototype.hasOwnProperty.call(cmd, "checkCallback") ||
+		Object.prototype.hasOwnProperty.call(cmd, "editorCheckCallback");
 
 	const modeIcon = getModeIcon(pair.mode);
 	const modeName = pair.mode.match(/desktop|mobile|any/)

@@ -24,7 +24,7 @@ export async function chooseNewCommand(
 	const command = await new AddCommandModal(plugin).awaitSelection();
 
 	let icon;
-	if (!command.hasOwnProperty("icon")) {
+	if (!Object.prototype.hasOwnProperty.call(command, "icon")) {
 		icon = await new ChooseIconModal(plugin).awaitSelection();
 	}
 
