@@ -1,11 +1,10 @@
 import { CommandIconPair } from "src/types";
 import { Modal } from "obsidian";
-import { h, render, VNode } from "preact";
+import { h, render } from "preact";
 import MobileModifyComponent from "./components/mobileModifyComponent";
 import CommanderPlugin from "src/main";
 
 export default class MobileModifyModal extends Modal {
-	private reactComponent: VNode;
 	public remove: boolean;
 
 	public constructor(
@@ -21,11 +20,13 @@ export default class MobileModifyModal extends Modal {
 
 	public async onOpen(): Promise<void> {
 		this.titleEl.innerText = this.pair.name;
-		this.reactComponent = h(MobileModifyComponent, {
-			plugin: this.plugin,
-			modal: this,
-		});
-		render(this.reactComponent, this.contentEl);
+		render(
+			h(MobileModifyComponent, {
+				plugin: this.plugin,
+				modal: this,
+			}),
+			this.contentEl
+		);
 	}
 
 	public onClose(): void {

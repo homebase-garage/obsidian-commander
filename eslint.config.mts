@@ -2,6 +2,10 @@ import tseslint from 'typescript-eslint';
 import obsidianmd from 'eslint-plugin-obsidianmd';
 import globals from 'globals';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import { fileURLToPath } from 'url';
+import path from 'path';
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(
 	globalIgnores([
@@ -22,7 +26,7 @@ export default defineConfig(
 				projectService: {
 					allowDefaultProject: ['eslint.config.mts', 'manifest.json'],
 				},
-				tsconfigRootDir: import.meta.dirname,
+				tsconfigRootDir: dirname,
 				extraFileExtensions: ['.json'],
 			},
 		},

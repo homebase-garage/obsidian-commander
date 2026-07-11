@@ -8,7 +8,9 @@ const __dirname = path.dirname(__filename);
 const LOCALE_DIR = path.resolve(__dirname, "../../locale");
 
 function loadJson(file: string): Record<string, string> {
-	return JSON.parse(readFileSync(path.join(LOCALE_DIR, file), "utf-8"));
+	return JSON.parse(
+		readFileSync(path.join(LOCALE_DIR, file), "utf-8")
+	) as Record<string, string>;
 }
 
 // Extract all {{placeholder}} tokens from a string

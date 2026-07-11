@@ -33,7 +33,6 @@ abstract class Base extends CommandManagerBase {
 	public reorder(): void {}
 
 	protected addRemovableCommand(
-		this: (_item: MenuItem) => void,
 		command: Command,
 		cmdPair: CommandIconPair,
 		plugin: CommanderPlugin,
@@ -197,8 +196,7 @@ export class EditorMenuCommandManager extends Base {
 					continue;
 
 				menu.addItem(
-					this.addRemovableCommand.call(
-						this,
+					this.addRemovableCommand(
 						command,
 						cmdPair,
 						plugin,
@@ -253,8 +251,7 @@ export class FileMenuCommandManager extends Base {
 				}
 
 				menu.addItem(
-					this.addRemovableCommand.call(
-						this,
+					this.addRemovableCommand(
 						command,
 						cmdPair,
 						plugin,

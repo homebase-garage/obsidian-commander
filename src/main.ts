@@ -142,7 +142,11 @@ export default class CommanderPlugin extends Plugin {
 	}
 
 	private async loadSettings(): Promise<void> {
-		const data = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		const data = Object.assign(
+			{},
+			DEFAULT_SETTINGS,
+			await this.loadData()
+		) as CommanderSettings;
 		this.settings = data;
 	}
 
@@ -151,11 +155,7 @@ export default class CommanderPlugin extends Plugin {
 	}
 
 	public listActiveToolbarCommands(): string[] {
-		//@ts-ignore
-		const activeCommands = this.app.vault.getConfig(
-			"mobileToolbarCommands"
-		);
-		return activeCommands;
+		return this.app.vault.getConfig("mobileToolbarCommands") as string[];
 	}
 
 	public getCommands(): Command[] {

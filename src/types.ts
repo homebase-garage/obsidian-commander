@@ -83,6 +83,7 @@ declare module "obsidian" {
 				[id: string]: Command;
 			};
 			executeCommandById: (id: string) => void;
+			removeCommand: (id: string) => void;
 		};
 		plugins: {
 			manifests: {
@@ -130,5 +131,9 @@ declare module "obsidian" {
 
 	interface WorkspaceLeaf {
 		containerEl: HTMLElement;
+	}
+
+	interface Vault {
+		getConfig(key: string): unknown;
 	}
 }

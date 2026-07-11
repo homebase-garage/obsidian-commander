@@ -100,8 +100,8 @@ export default function CommandComponent({
 	const owningPlugin = plugin.app.plugins.manifests[owningPluginID!];
 	const isInternal = !owningPlugin;
 	const isChecked =
-		Object.prototype.hasOwnProperty.call(cmd, "checkCallback") ||
-		Object.prototype.hasOwnProperty.call(cmd, "editorCheckCallback");
+		(Object.prototype.hasOwnProperty.call(cmd, "checkCallback") as boolean) ||
+		(Object.prototype.hasOwnProperty.call(cmd, "editorCheckCallback") as boolean);
 
 	const modeIcon = getModeIcon(pair.mode);
 	const modeName = pair.mode.match(/desktop|mobile|any/)
@@ -124,8 +124,9 @@ export default function CommandComponent({
 							<ChangeableText
 								ariaLabel={t("Double click to rename")}
 								handleChange={({ target }): void => {
-									/* @ts-ignore */
-									handleRename(target?.value);
+									handleRename(
+										(target as HTMLInputElement | null)?.value ?? ""
+									);
 								}}
 								value={pair.name}
 							/>

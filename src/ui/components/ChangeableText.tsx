@@ -45,8 +45,7 @@ export default function ChangeableText({
 			) : (
 				<span
 					onDblClick={({ target }): void => {
-						/* @ts-ignore */
-						setWidth(target?.offsetWidth);
+						setWidth((target as HTMLElement | null)?.offsetWidth ?? 0);
 						setShowInput(true);
 					}}
 					aria-label={ariaLabel}

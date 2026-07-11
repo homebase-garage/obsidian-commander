@@ -23,7 +23,7 @@ export default function ({
 	const [icon, setIcon] = useState(macro.icon || "star");
 	const [startup, setStartup] = useState(macro.startup || false);
 	const [macroCommands, setMacroCommands] = useState<MacroItem[]>(
-		JSON.parse(JSON.stringify(macro.macro)) || []
+		(JSON.parse(JSON.stringify(macro.macro)) as MacroItem[]) || []
 	);
 
 	const handleAddCommand = async (): Promise<void> => {
@@ -237,8 +237,9 @@ export default function ({
 						id="checkbox"
 						checked={startup}
 						onChange={({ target }): void => {
-							//@ts-expect-error
-							setStartup(target?.checked ?? false);
+							setStartup(
+								(target as HTMLInputElement | null)?.checked ?? false
+							);
 						}}
 					/>
 					<label htmlFor="checkbox">Auto-Run on Startup</label>

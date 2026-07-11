@@ -12,7 +12,9 @@ function buildPlugin(macros: Macro[]): CommanderPlugin {
 			commands: { executeCommandById },
 		},
 	} as unknown as CommanderPlugin;
-	plugin.executeMacro = CommanderPluginClass.prototype.executeMacro.bind(plugin);
+	plugin.executeMacro = CommanderPluginClass.prototype.executeMacro.bind(
+		plugin
+	) as CommanderPlugin["executeMacro"];
 	return plugin;
 }
 

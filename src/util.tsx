@@ -24,7 +24,7 @@ export async function chooseNewCommand(
 	const command = await new AddCommandModal(plugin).awaitSelection();
 
 	let icon;
-	if (!Object.prototype.hasOwnProperty.call(command, "icon")) {
+	if (!(Object.prototype.hasOwnProperty.call(command, "icon") as boolean)) {
 		icon = await new ChooseIconModal(plugin).awaitSelection();
 	}
 
@@ -141,7 +141,6 @@ export function updateMacroCommands(plugin: CommanderPlugin): void {
 		p.startsWith("cmdr:macro-")
 	);
 	for (const command of oldCommands) {
-		//@ts-ignore
 		plugin.app.commands.removeCommand(command);
 	}
 

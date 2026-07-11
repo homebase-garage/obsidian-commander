@@ -176,14 +176,14 @@ export default function settingTabComponent({
 											}
 										);
 
-										plugin.app.setting.activeTab.containerEl
-											.querySelectorAll(
-												".setting-item-heading"
-											)[1]
-											// @ts-ignore
-											.nextSibling?.nextSibling?.nextSibling?.addClass?.(
-												"cmdr-cta"
-											);
+										(
+											plugin.app.setting.activeTab.containerEl
+												.querySelectorAll(
+													".setting-item-heading"
+												)[1]
+												.nextSibling?.nextSibling
+												?.nextSibling as HTMLElement | null
+										)?.addClass?.("cmdr-cta");
 									}, 50);
 								}}
 								className="mod-cta"

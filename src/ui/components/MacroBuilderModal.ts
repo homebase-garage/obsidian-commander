@@ -27,7 +27,7 @@ export default class MacroBuilderModal extends Modal {
 				plugin: this.plugin,
 				macro: this.macro,
 				onSave: this.onSave,
-				onCancel: this.close.bind(this),
+				onCancel: (): void => this.close(),
 			}),
 			this.contentEl
 		);
