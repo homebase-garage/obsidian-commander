@@ -74,4 +74,16 @@ export default defineConfig(
 			'obsidianmd/prefer-create-el': 'off',
 		},
 	},
+	{
+		files: ['package.json'],
+		rules: {
+			// builtin-modules, node-fetch, and npm-run-all are flagged as
+			// having more modern replacements. They're dev-only build
+			// tooling (used from scripts/, never bundled into main.js), so
+			// swapping them carries build-breakage risk for no end-user
+			// benefit. Deferred to a dedicated follow-up rather than bundled
+			// into this lint-cleanup branch.
+			'depend/ban-dependencies': 'off',
+		},
+	},
 );
