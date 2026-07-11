@@ -289,7 +289,7 @@ export default function AdvancedToolbarSettings({
 				{Platform.isMobile && (
 					<button
 						onClick={(): void => {
-							plugin.app.setting.openTabById("mobile");
+							plugin.app.setting.openTabById("interface");
 						}}
 						className="mod-cta"
 					>
