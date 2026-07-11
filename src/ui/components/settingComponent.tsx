@@ -120,12 +120,10 @@ export function SliderComponent(props: SettingProps<number>): h.JSX.Element {
 					step={props.step ?? "1"}
 					value={val}
 					onPointerMove={({ target }): void => {
-						{/*@ts-expect-error*/}
-						if (val !== target.value) {
-							{/*@ts-expect-error*/}
-							setVal(target.value);
-							{/*@ts-expect-error*/}
-							props.changeHandler(target.value);
+						const value = Number((target as HTMLInputElement).value);
+						if (!isNaN(value) && val !== value) {
+							setVal(value);
+							props.changeHandler(value);
 						}
 					}}
 				/>
