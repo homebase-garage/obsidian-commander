@@ -293,7 +293,7 @@ export default function AdvancedToolbarSettings({
 						}}
 						className="mod-cta"
 					>
-						{"Open Mobile Settings"}
+						{"Open mobile settings"}
 					</button>
 				)}
 			</div>
