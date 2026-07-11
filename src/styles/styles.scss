@@ -82,11 +82,11 @@
 }
 
 .cmdr-hide-suggestions {
-	display: none;
+	display: none !important;
 }
 
 .cmdr-name-input-wrapper-parent {
-	display: block;
+	display: block !important;
 }
 
 .cmdr-confetti-canvas {
