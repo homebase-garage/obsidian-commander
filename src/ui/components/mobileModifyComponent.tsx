@@ -1,17 +1,29 @@
 import { h } from "preact";
+import { useEffect } from "preact/hooks";
 import t from "src/l10n";
 import { ObsidianIcon } from "src/util";
 import MobileModifyModal from "../mobileModifyModal";
 import { ColorPicker } from "./ColorPicker";
 import CommanderPlugin from "src/main";
 
-export default function MobileModifyComponent({
-	plugin,
-	modal: controller,
-}: {
-	plugin: CommanderPlugin;
-	modal: MobileModifyModal;
-}): h.JSX.Element {
+export default function MobileModifyComponent(
+	this: { forceUpdate: () => void },
+	{
+		plugin,
+		modal: controller,
+	}: {
+		plugin: CommanderPlugin;
+		modal: MobileModifyModal;
+	}
+): h.JSX.Element {
+	useEffect(() => {
+		const update = (): void => {
+			this.forceUpdate();
+		};
+		addEventListener("cmdr-icon-changed", update);
+		return (): void => removeEventListener("cmdr-icon-changed", update);
+	}, []);
+
 	return (
 		<div className="cmdr-mobile-modify-grid">
 			<div

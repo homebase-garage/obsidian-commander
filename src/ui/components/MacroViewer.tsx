@@ -12,10 +12,10 @@ interface MacroBuilderProps {
 	plugin: CommanderPlugin;
 	macros: Macro[];
 }
-export default function MacroViewer({
-	plugin,
-	macros,
-}: MacroBuilderProps): h.JSX.Element {
+export default function MacroViewer(
+	this: { forceUpdate: () => void },
+	{ plugin, macros }: MacroBuilderProps
+): h.JSX.Element {
 	const handleBuilder = (macro: Macro, idx?: number): void => {
 		const onClose = (updatedMacro: Macro): void => {
 			macros.splice(
@@ -25,6 +25,7 @@ export default function MacroViewer({
 			);
 
 			void plugin.saveSettings();
+			this.forceUpdate();
 			updateMacroCommands(plugin);
 			modal.close();
 		};
@@ -35,6 +36,7 @@ export default function MacroViewer({
 	const handleDelete = (idx: number): void => {
 		macros.splice(idx, 1);
 		void plugin.saveSettings();
+		this.forceUpdate();
 		updateMacroCommands(plugin);
 	};
 
