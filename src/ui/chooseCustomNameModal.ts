@@ -9,7 +9,7 @@ export default class ChooseCustomNameModal extends SuggestModal<string> {
 	) {
 		super(plugin.app);
 		this.setPlaceholder(t("Use a custom name"));
-		this.resultContainerEl.style.display = "none";
+		this.resultContainerEl.addClass("cmdr-hide-suggestions");
 
 		this.setInstructions([
 			{
@@ -34,7 +34,7 @@ export default class ChooseCustomNameModal extends SuggestModal<string> {
 		const wrapper = createDiv({ cls: "cmdr-name-input-wrapper" });
 		this.inputEl.parentNode?.insertBefore(wrapper, this.inputEl);
 		wrapper.appendChild(this.inputEl);
-		wrapper.parentElement!.style.display = "block";
+		wrapper.parentElement!.addClass("cmdr-name-input-wrapper-parent");
 
 		const btn = createEl("button", { text: t("Save"), cls: "mod-cta" });
 		btn.onclick = (e): void => this.selectSuggestion(this.inputEl.value, e);

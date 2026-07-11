@@ -45,6 +45,10 @@
 	margin-bottom: -18px;
 }
 
+.cmdr-menu-item {
+	display: flex;
+}
+
 .cmdr-menu-more-options {
 	color: var(--text-muted);
 	position: absolute;
@@ -52,9 +56,35 @@
 	padding-top: 2px;
 	transform: scale(0.9);
 	transition: all 150ms ease;
+	display: none;
+	&.is-visible {
+		display: block;
+	}
 	&:hover {
 		color: var(--text-primary);
 	}
+}
+
+.cmdr-confirm-delete-modal {
+	z-index: 99;
+}
+
+.cmdr-hide-suggestions {
+	display: none;
+}
+
+.cmdr-name-input-wrapper-parent {
+	display: block;
+}
+
+.cmdr-confetti-canvas {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	z-index: 100;
 }
 
 .cmdr-mobile .cmdr-credits {

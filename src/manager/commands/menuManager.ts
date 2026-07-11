@@ -40,14 +40,13 @@ abstract class Base extends CommandManagerBase {
 		commandList: CommandIconPair[]
 	): (_item: MenuItem) => void {
 		return (item: MenuItem) => {
-			item.dom.addClass("cmdr");
+			item.dom.addClass("cmdr", "cmdr-menu-item");
 			item.dom.style.color =
 				cmdPair.color === "#000000" || cmdPair.color === undefined
 					? "inherit"
 					: cmdPair.color;
 			item.setSection("cmdr");
 
-			item.dom.style.display = "flex";
 			const optionEl = createDiv({
 				cls: "cmdr-menu-more-options",
 			});
@@ -117,10 +116,10 @@ abstract class Base extends CommandManagerBase {
 
 			let isRemovable = false;
 			const setNormal = (): void => {
-				optionEl.style.display = "none";
+				optionEl.removeClass("is-visible");
 			};
 			const setRemovable = (): void => {
-				optionEl.style.display = "block";
+				optionEl.addClass("is-visible");
 			};
 			const removeMenu = async (): Promise<void> => {
 				item.dom.addClass("cmdr-removing");

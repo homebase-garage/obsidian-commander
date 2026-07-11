@@ -97,17 +97,10 @@ export function updateHiderStylesheet(settings: CommanderSettings): void {
 }
 
 export async function showConfetti({ target }: MouseEvent): Promise<void> {
-	const myCanvas = activeDocument.createElement("canvas");
+	const myCanvas = activeDocument.createEl("canvas", {
+		cls: "cmdr-confetti-canvas",
+	});
 	activeDocument.body.appendChild(myCanvas);
-	myCanvas.style.position = "fixed";
-	myCanvas.style.width = "100vw";
-	myCanvas.style.height = "100vh";
-	myCanvas.style.top = "0px";
-	myCanvas.style.left = "0px";
-	//@ts-ignore
-	myCanvas.style["pointer-events"] = "none";
-	//@ts-ignore
-	myCanvas.style["z-index"] = "100";
 
 	const myConfetti = confetti.create(myCanvas, {
 		resize: true,

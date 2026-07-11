@@ -13,7 +13,7 @@ export default class ConfirmDeleteModal extends Modal {
 
 	public async onOpen(): Promise<void> {
 		this.titleEl.innerText = t("Remove Command");
-		this.containerEl.style.zIndex = "99";
+		this.containerEl.addClass("cmdr-confirm-delete-modal");
 		render(h(confirmDeleteComponent, { modal: this }), this.contentEl);
 	}
 
