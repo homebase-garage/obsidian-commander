@@ -97,7 +97,7 @@ export function updateHiderStylesheet(settings: CommanderSettings): void {
 }
 
 export async function showConfetti({ target }: MouseEvent): Promise<void> {
-	const myCanvas = activeDocument.createEl("canvas", {
+	const myCanvas = createEl("canvas", {
 		cls: "cmdr-confetti-canvas",
 	});
 	activeDocument.body.appendChild(myCanvas);
