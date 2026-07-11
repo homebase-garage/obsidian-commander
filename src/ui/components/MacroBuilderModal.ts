@@ -21,7 +21,7 @@ export default class MacroBuilderModal extends Modal {
 	}
 
 	public onOpen(): void {
-		this.titleEl.setText("Macro Builder");
+		this.titleEl.setText("Macro builder");
 		render(
 			h(MacroBuilderComponent, {
 				plugin: this.plugin,

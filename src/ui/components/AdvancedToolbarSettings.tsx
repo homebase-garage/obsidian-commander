@@ -9,9 +9,9 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 	containerEl.empty();
 
 	new Setting(containerEl)
-		.setName("Toolbar Row Count")
+		.setName("Toolbar row count")
 		.setDesc(
-			"Set how many Rows the Mobile Toolbar should have. Set this to 0 to remove the Toolbar."
+			"Set how many rows the mobile toolbar should have. Set this to 0 to remove the toolbar."
 		)
 		.addSlider((cb) =>
 			cb
@@ -26,9 +26,9 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 		);
 
 	new Setting(containerEl)
-		.setName("Column Layout")
+		.setName("Column layout")
 		.setDesc(
-			"Use a column based layout instead of the default row. This makes it easier to arrange the Commands."
+			"Use a column based layout instead of the default row. This makes it easier to arrange the commands."
 		)
 		.addToggle((cb) =>
 			cb
@@ -52,9 +52,9 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 	// 	})
 
 	new Setting(containerEl)
-		.setName("Bottom Offset")
+		.setName("Bottom offset")
 		.setDesc(
-			"Offset the Toolbar from the Bottom of the Screen. This is useful if the toolbar is partially obscured by other UI Elements."
+			"Offset the toolbar from the bottom of the screen. This is useful if the toolbar is partially obscured by other UI elements."
 		)
 		.addSlider((cb) =>
 			cb
@@ -70,7 +70,7 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 
 	if (Platform.isMobile) {
 		const description = document.createDocumentFragment();
-		description.appendChild(createEl("h3", { text: "Custom Icons" }));
+		description.appendChild(createEl("h3", { text: "Custom icons" }));
 		containerEl.appendChild(description);
 
 		plugin.getCommandsWithoutIcons().forEach((command) => {
@@ -90,7 +90,7 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 							)?.iconID;
 						currentIcon
 							? setIcon(iconDiv, currentIcon)
-							: bt.setButtonText("No Icon");
+							: bt.setButtonText("No icon");
 					}
 					bt.onClick(async () => {
 						const icon = await new ChooseIconModal(
@@ -115,7 +115,7 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 				})
 				.addExtraButton((bt) => {
 					bt.setIcon("reset")
-						.setTooltip("Reset to default - Requires a restart")
+						.setTooltip("Reset to default - requires a restart")
 						.onClick(async () => {
 							plugin.settings.advancedToolbar.mappedIcons =
 								plugin.settings.advancedToolbar.mappedIcons.filter(
@@ -126,7 +126,7 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 							await plugin.saveSettings();
 							render(containerEl, plugin);
 							new Notice(
-								"If the default Icon doesn't appear, you might have to restart Obsidian."
+								"If the default icon doesn't appear, you might have to restart Obsidian."
 							);
 						});
 				});
@@ -141,15 +141,15 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 	);
 	advancedEl.appendChild(
 		createEl("div", {
-			text: "Advanced Settings",
+			text: "Advanced settings",
 			attr: { style: "margin-bottom: 8px; font-weight: bold" },
 		})
 	);
 
 	new Setting(advancedEl)
-		.setName("Button Height")
+		.setName("Button height")
 		.setDesc(
-			"Change the Height of each Button inside the Mobile Toolbar (in px)."
+			"Change the height of each button inside the mobile toolbar (in px)."
 		)
 		.addText((cb) =>
 			cb
@@ -170,9 +170,9 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 				})
 		);
 	new Setting(advancedEl)
-		.setName("Button Width")
+		.setName("Button width")
 		.setDesc(
-			"Change the Width of each Button inside the Mobile Toolbar (in px)."
+			"Change the width of each button inside the mobile toolbar (in px)."
 		)
 		.addText((cb) =>
 			cb
@@ -193,9 +193,9 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 				})
 		);
 	new Setting(advancedEl)
-		.setName("Toolbar Extra Spacing")
+		.setName("Toolbar extra spacing")
 		.setDesc(
-			"Some Themes need extra spacing in the toolbar. If your Toolbar doesn't wrap properly, try increasing this value."
+			"Some themes need extra spacing in the toolbar. If your toolbar doesn't wrap properly, try increasing this value."
 		)
 		.addSlider((cb) =>
 			cb
