@@ -69,9 +69,9 @@
 	"Hide other Commands": "Masquer les autres commandes",
 	"Double click to enter custom value": "Double-cliquez pour entrer une valeur personnalisée",
 	"Choose custom spacing for Command Buttons": "Choisissez un espacement personnalisé pour les boutons de commande",
-	"Change the spacing between commands.": "Modifier l'espacement entre les commandes.",
+	"Change the spacing between commands. You can set different values on mobile and desktop.": "Modifier l'espacement entre les commandes.",
 	"Warning": "Avertissement",
-	"As of Obsidian 0.16.0 you need to explicitly enable the Tab Title Bar. Once enabled, you might need to restart Obsidian.": "À partir d'Obsidian 0.16.0, vous devez activer explicitement la barre de titre des onglets. Une fois activée, il se peut que vous deviez redémarrer Obsidian.",
+	"As of Obsidian 0.16.0 you need to explicitly enable the View Header.": "À partir d'Obsidian 0.16.0, vous devez activer explicitement la barre de titre des onglets. Une fois activée, il se peut que vous deviez redémarrer Obsidian.",
 	"Open Appearance Settings": "Ouvrir les paramètres d'apparence",
 	"Explorer": "Explorateur"
 }
