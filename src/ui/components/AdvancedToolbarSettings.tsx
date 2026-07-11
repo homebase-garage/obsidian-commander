@@ -221,7 +221,9 @@ export default function AdvancedToolbarSettings({
 		if (ref.current) {
 			render(ref.current, plugin);
 		}
-		return () => ref.current && ref.current.empty();
+		return (): void => {
+			ref.current && ref.current.empty();
+		};
 	}, []);
 
 	return (

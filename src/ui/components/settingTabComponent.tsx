@@ -37,7 +37,7 @@ export default function settingTabComponent({
 
 	useEffect(() => {
 		addEventListener("keydown", tabToNextTab);
-		return () => removeEventListener("keydown", tabToNextTab);
+		return (): void => removeEventListener("keydown", tabToNextTab);
 	}, [activeTab]);
 
 	//This is used to remove the initial onclick event listener.
@@ -342,7 +342,7 @@ export function TabHeader({
 		}
 
 		el.addEventListener("wheel", handleScroll);
-		return () => el.removeEventListener("wheel", handleScroll);
+		return (): void => el.removeEventListener("wheel", handleScroll);
 	}, []);
 
 	useEffect(

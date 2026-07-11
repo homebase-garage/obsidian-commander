@@ -61,7 +61,7 @@ export interface Tab {
 	tab: h.JSX.Element;
 }
 
-export type Mode = "desktop" | "any" | "mobile" | string;
+export type Mode = "desktop" | "any" | "mobile" | (string & {});
 
 export interface CommandIconPair {
 	id: string;

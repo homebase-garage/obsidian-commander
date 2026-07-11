@@ -26,7 +26,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 		const buttons = this.buttonsFor(leaf, true);
 		if (!buttons || buttons.has(id)) return;
 
-		const buttonIcon = (view as ItemView).addAction(icon, name, () => {
+		const buttonIcon = view.addAction(icon, name, () => {
 			this.plugin.app.workspace.setActiveLeaf(leaf, { focus: true });
 			this.plugin.app.commands.executeCommandById(id);
 		});

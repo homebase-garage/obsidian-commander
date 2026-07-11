@@ -19,7 +19,9 @@ export const ColorPicker = ({
 				.onChange(onChange);
 		}
 
-		return () => ref.current?.empty?.();
+		return (): void => {
+			ref.current?.empty?.();
+		};
 	}, [onChange, initialColor]);
 
 	return <div ref={ref} className="cmdr-flex cmdr-items-center" />;

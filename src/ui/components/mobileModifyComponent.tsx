@@ -18,7 +18,7 @@ export default function MobileModifyComponent({
 			this.forceUpdate();
 		};
 		addEventListener("cmdr-icon-changed", update);
-		return () => removeEventListener("cmdr-icon-changed", update);
+		return (): void => removeEventListener("cmdr-icon-changed", update);
 	}, []);
 
 	return (
