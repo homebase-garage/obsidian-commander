@@ -32,7 +32,7 @@ export default function About({
 			onClick={(e): void => {
 				void showConfetti(e);
 				window.setTimeout(
-					() => location.replace("https://ko-fi.com/phibr0"),
+					() => location.replace("https://buymeacoffee.com/johnny1093"),
 					Math.random() * 800 + 500
 				);
 			}}
