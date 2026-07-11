@@ -49,6 +49,12 @@
 	display: flex;
 }
 
+.cmdr-slider .clickable-icon.is-disabled {
+	opacity: 0.35;
+	cursor: default;
+	pointer-events: none;
+}
+
 .cmdr-menu-more-options {
 	color: var(--text-muted);
 	position: absolute;

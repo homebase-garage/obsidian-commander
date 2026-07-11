@@ -111,11 +111,18 @@ export function SliderComponent({
 						aria-label={t("Restore default")}
 						icon="reset"
 						size={16}
-						className="clickable-icon"
-						onClick={(): void => {
-							setVal(defaultValue);
-							props.changeHandler(defaultValue);
-						}}
+						className={`clickable-icon${
+							val === defaultValue ? " is-disabled" : ""
+						}`}
+						aria-disabled={val === defaultValue}
+						onClick={
+							val === defaultValue
+								? undefined
+								: (): void => {
+										setVal(defaultValue);
+										props.changeHandler(defaultValue);
+									}
+						}
 					/>
 				)}
 				<ChangeableText
