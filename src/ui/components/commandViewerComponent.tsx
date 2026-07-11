@@ -10,7 +10,6 @@ import t from "src/l10n";
 import { Platform } from "obsidian";
 import Logo from "./Logo";
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 export const ManagerContext = createContext<CommandManagerBase>(null!);
 
 interface CommandViewerProps {

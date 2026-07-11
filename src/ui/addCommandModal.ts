@@ -62,6 +62,6 @@ export default class AddCommandModal extends FuzzySuggestModal<Command> {
 	}
 
 	// This will be overriden anyway, but typescript complains if it's not declared
-	// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-empty-function
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- overridden by awaitSelection, declared only to satisfy the type
 	public onChooseItem(item: Command, evt: MouseEvent | KeyboardEvent): void {}
 }

@@ -26,7 +26,6 @@ export default class TitleBarManager extends CommandManagerBase {
 
 	private init(): void {
 		this.plugin.app.workspace.onLayoutReady(async () => {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			this.container = document.querySelector(
 				".titlebar div.titlebar-button-container.mod-right"
 			)!;

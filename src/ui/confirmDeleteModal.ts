@@ -8,7 +8,6 @@ export default class ConfirmDeleteModal extends Modal {
 	private reactComponent: VNode;
 	public remove: boolean;
 
-	// eslint-disable-next-line no-unused-vars
 	public constructor(public plugin: CommanderPlugin) {
 		super(plugin.app);
 	}

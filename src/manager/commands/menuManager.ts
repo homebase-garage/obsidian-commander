@@ -29,18 +29,16 @@ abstract class Base extends CommandManagerBase {
 	}
 
 	// There is no state to update
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- no state to update
 	public reorder(): void {}
 
 	protected addRemovableCommand(
-		// eslint-disable-next-line no-unused-vars
 		this: (_item: MenuItem) => void,
 		command: Command,
 		cmdPair: CommandIconPair,
 		plugin: CommanderPlugin,
 		menu: Menu,
 		commandList: CommandIconPair[]
-	// eslint-disable-next-line no-unused-vars
 	): (_item: MenuItem) => void {
 		return (item: MenuItem) => {
 			item.dom.addClass("cmdr");

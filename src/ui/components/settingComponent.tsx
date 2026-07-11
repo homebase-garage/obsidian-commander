@@ -30,7 +30,6 @@ function BaseComponent({
 interface SettingProps<T> {
 	name: string;
 	description: string;
-	// eslint-disable-next-line no-unused-vars
 	changeHandler: (value: T) => void;
 	value: T;
 	min?: number;

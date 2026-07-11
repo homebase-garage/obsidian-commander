@@ -36,7 +36,6 @@ export async function chooseNewCommand(
 	return {
 		id: command.id,
 		//This cannot be undefined anymore
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		icon: icon ?? command.icon!,
 		name: name || command.name,
 		mode: "any",
@@ -59,7 +58,6 @@ export function ObsidianIcon({
 	const iconEl = useRef<HTMLDivElement>(null);
 
 	useLayoutEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		setIcon(iconEl.current!, icon);
 	}, [icon, size]);
 

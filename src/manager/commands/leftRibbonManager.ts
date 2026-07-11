@@ -71,7 +71,6 @@ export default class LeftRibbonManager extends CommandManagerBase {
 		app.workspace.leftRibbon.items.remove(nativeAction);
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	public reorder(): void {
 		this.plugin.settings.leftRibbon.forEach((pair) => {
 			this.removeCommand(pair, false);

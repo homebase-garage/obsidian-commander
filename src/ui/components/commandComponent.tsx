@@ -15,11 +15,8 @@ interface CommandViewerProps {
 	handleUp: () => void;
 	handleDown: () => void;
 	handleNewIcon: () => void;
-	// eslint-disable-next-line no-unused-vars
 	handleRename: (_name: string) => void;
-	// eslint-disable-next-line no-unused-vars
 	handleModeChange: (_mode?: string) => void;
-	// eslint-disable-next-line no-unused-vars
 	handleColorChange: (_color?: string) => void;
 	sortable?: boolean;
 }
@@ -100,7 +97,6 @@ export default function CommandComponent({
 		);
 	}
 	const owningPluginID = cmd.id.split(":").first();
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const owningPlugin = plugin.app.plugins.manifests[owningPluginID!];
 	const isInternal = !owningPlugin;
 	const isChecked =

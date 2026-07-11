@@ -10,7 +10,6 @@ import { SliderComponent } from "./settingComponent";
 interface MacroBuilderProps {
 	plugin: CommanderPlugin;
 	macro: Macro;
-	// eslint-disable-next-line no-unused-vars
 	onSave: (macro: Macro) => void;
 	onCancel: () => void;
 }

@@ -3,13 +3,14 @@ import { CommandIconPair } from "src/types";
 import CommandManagerBase from "./commandManager";
 
 interface TextToolbarAPI {
-	// eslint-disable-next-line no-unused-vars
 	setCommands(_cmds: { id: string; icon: string; name: string }[]): void;
 }
 
 function getTextToolbarAPI(plugin: CommanderPlugin): TextToolbarAPI | undefined {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	return (plugin.app as any).plugins?.plugins?.["text-formatting-toolbar"]?.api;
+	const app = plugin.app as unknown as {
+		plugins?: { plugins?: Record<string, { api?: TextToolbarAPI }> };
+	};
+	return app.plugins?.plugins?.["text-formatting-toolbar"]?.api;
 }
 
 export default class TextToolbarIntegrationManager extends CommandManagerBase {

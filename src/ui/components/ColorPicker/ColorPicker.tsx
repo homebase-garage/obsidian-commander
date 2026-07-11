@@ -4,7 +4,6 @@ import { useEffect, useRef } from "preact/hooks";
 
 interface ColorPickerProps {
 	initialColor: string;
-	// eslint-disable-next-line no-unused-vars
 	onChange: (_color: string) => void;
 }
 

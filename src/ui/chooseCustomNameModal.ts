@@ -4,9 +4,7 @@ import CommanderPlugin from "src/main";
 
 export default class ChooseCustomNameModal extends SuggestModal<string> {
 	public constructor(
-		// eslint-disable-next-line no-unused-vars
 		private defaultName: string,
-		// eslint-disable-next-line no-unused-vars
 		private plugin: CommanderPlugin
 	) {
 		super(plugin.app);
@@ -58,14 +56,14 @@ export default class ChooseCustomNameModal extends SuggestModal<string> {
 	}
 
 	// This isn't needed, since we just want a text field without options
-	// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-empty-function
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- intentionally a no-op, only a text field is needed
 	public renderSuggestion(value: string, el: HTMLElement): void {}
 
 	// This will be overriden anyway, but typescript complains if it's not declared
-	/* eslint-disable no-unused-vars, @typescript-eslint/no-empty-function */
+	/* eslint-disable @typescript-eslint/no-empty-function -- overridden by awaitSelection, declared only to satisfy the type */
 	public onChooseSuggestion(
 		item: string,
 		evt: MouseEvent | KeyboardEvent
 	): void {}
-	/* eslint-enable no-unused-vars, @typescript-eslint/no-empty-function */
+	/* eslint-enable @typescript-eslint/no-empty-function -- overridden by awaitSelection, declared only to satisfy the type */
 }

@@ -7,14 +7,11 @@ import MacroBuilderComponent from "./MacroBuilder";
 export default class MacroBuilderModal extends Modal {
 	private plugin: CommanderPlugin;
 	private macro: Macro;
-	// eslint-disable-next-line no-unused-vars
 	private onSave: (_macro: Macro) => void;
 
 	public constructor(
 		plugin: CommanderPlugin,
-		// eslint-disable-next-line no-unused-vars
 		macro: Macro,
-		// eslint-disable-next-line no-unused-vars
 		onSave: (_macro: Macro) => void
 	) {
 		super(plugin.app);
