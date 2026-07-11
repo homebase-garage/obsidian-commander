@@ -1,4 +1,5 @@
 import { createContext, Fragment, h } from "preact";
+import { useState } from "preact/hooks";
 import CommanderPlugin from "src/main";
 import CommandComponent from "./commandComponent";
 import CommandManagerBase from "src/manager/commands/commandManager";
@@ -18,10 +19,15 @@ interface CommandViewerProps {
 	children?: h.JSX.Element | h.JSX.Element[];
 	sortable?: boolean;
 }
-export default function CommandViewer(
-	this: { forceUpdate: () => void },
-	{ manager, plugin, children, sortable = true }: CommandViewerProps
-): h.JSX.Element {
+export default function CommandViewer({
+	manager,
+	plugin,
+	children,
+	sortable = true,
+}: CommandViewerProps): h.JSX.Element {
+	const [, setUpdateTick] = useState(0);
+	const forceUpdate = (): void => setUpdateTick((tick) => tick + 1);
+
 	return (
 		<Fragment>
 			<ManagerContext.Provider value={manager}>
@@ -45,7 +51,7 @@ export default function CommandViewer(
 											).didChooseRemove())
 										) {
 											await manager.removeCommand(cmd);
-											this.forceUpdate();
+											forceUpdate();
 										}
 									}}
 									handleUp={(): void => {
@@ -55,7 +61,7 @@ export default function CommandViewer(
 											idx - 1
 										);
 										void manager.reorder();
-										this.forceUpdate();
+										forceUpdate();
 									}}
 									handleDown={(): void => {
 										arrayMoveMutable(
@@ -64,7 +70,7 @@ export default function CommandViewer(
 											idx + 1
 										);
 										void manager.reorder();
-										this.forceUpdate();
+										forceUpdate();
 									}}
 									handleRename={async (
 										name
@@ -72,7 +78,7 @@ export default function CommandViewer(
 										cmd.name = name;
 										await plugin.saveSettings();
 										await manager.reorder();
-										this.forceUpdate();
+										forceUpdate();
 									}}
 									handleNewIcon={async (): Promise<void> => {
 										const newIcon =
@@ -83,7 +89,7 @@ export default function CommandViewer(
 											cmd.icon = newIcon;
 											await plugin.saveSettings();
 											await manager.reorder();
-											this.forceUpdate();
+											forceUpdate();
 										}
 										dispatchEvent(
 											new Event("cmdr-icon-changed")
@@ -108,7 +114,7 @@ export default function CommandViewer(
 											mode || modes[currentIdx + 1];
 										await plugin.saveSettings();
 										await manager.reorder();
-										this.forceUpdate();
+										forceUpdate();
 									}}
 									handleColorChange={async (
 										color?: string
@@ -116,7 +122,7 @@ export default function CommandViewer(
 										cmd.color = color;
 										await plugin.saveSettings();
 										await manager.reorder();
-										this.forceUpdate();
+										forceUpdate();
 									}}
 								/>
 							);
@@ -146,7 +152,7 @@ export default function CommandViewer(
 							const pair = await chooseNewCommand(plugin);
 							await manager.addCommand(pair);
 							await manager.reorder();
-							this.forceUpdate();
+							forceUpdate();
 						}}
 					>
 						{t("Add command")}
