@@ -108,7 +108,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 			})
 		);
 		this.plugin.app.workspace.onLayoutReady(() =>
-			setTimeout(() => this.addButtonsToAllLeaves(), 100)
+			window.setTimeout(() => this.addButtonsToAllLeaves(), 100)
 		);
 	}
 
@@ -126,7 +126,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 	}
 
 	private addButtonsToAllLeaves(refresh = false): void {
-		activeWindow.requestAnimationFrame(() =>
+		window.requestAnimationFrame(() =>
 			this.plugin.app.workspace.iterateAllLeaves((leaf) =>
 				this.addButtonsToLeaf(leaf, refresh)
 			)
@@ -134,7 +134,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 	}
 
 	private removeButtonsFromAllLeaves(): void {
-		activeWindow.requestAnimationFrame(() =>
+		window.requestAnimationFrame(() =>
 			this.plugin.app.workspace.iterateAllLeaves((leaf) =>
 				this.removeButtonsFromLeaf(leaf)
 			)

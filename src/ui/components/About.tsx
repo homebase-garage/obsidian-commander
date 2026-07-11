@@ -15,7 +15,7 @@ export default function About({
 			className="mod-cta"
 			onClick={(e): void => {
 				void showConfetti(e);
-				setTimeout(
+				window.setTimeout(
 					() =>
 						location.replace("https://forms.gle/hPjn61G9bqqFb3256"),
 					Math.random() * 800 + 500
@@ -31,7 +31,7 @@ export default function About({
 			className="mod-cta"
 			onClick={(e): void => {
 				void showConfetti(e);
-				setTimeout(
+				window.setTimeout(
 					() => location.replace("https://ko-fi.com/phibr0"),
 					Math.random() * 800 + 500
 				);

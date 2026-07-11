@@ -60,7 +60,7 @@ export default class CommanderPlugin extends Plugin {
 				}
 				case Action.DELAY: {
 					await new Promise((resolve) =>
-						setTimeout(resolve, command.delay)
+						window.setTimeout(resolve, command.delay)
 					);
 					continue;
 				}

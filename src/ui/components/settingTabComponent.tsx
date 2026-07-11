@@ -168,7 +168,7 @@ export default function settingTabComponent({
 							<button
 								onClick={(): void => {
 									plugin.app.setting.openTabById("appearance");
-									setTimeout(() => {
+									window.setTimeout(() => {
 										plugin.app.setting.activeTab.containerEl.scroll(
 											{
 												behavior: "smooth",
