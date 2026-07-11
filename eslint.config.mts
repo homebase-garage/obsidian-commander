@@ -39,4 +39,11 @@ export default defineConfig(
 		},
 	},
 	...obsidianmd.configs.recommended,
+	{
+		files: ['src/main.ts'],
+		rules: {
+			// Renaming this command's id would break existing users' saved hotkeys
+			'obsidianmd/commands/no-command-in-command-id': 'off',
+		},
+	},
 );
