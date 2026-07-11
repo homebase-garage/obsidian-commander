@@ -1,7 +1,7 @@
 // Minimal Obsidian API mock for unit tests
 
 // moment is a global in Obsidian; provide a minimal stub
-(globalThis as Record<string, unknown>).moment = { locale: () => "en" };
+(globalThis as Record<string, unknown>).moment = { locale: (): string => "en" };
 
 export const Platform = {
 	isDesktop: true,
@@ -24,20 +24,22 @@ export class Plugin {}
 export class Modal {}
 export class Setting {}
 export class FuzzySuggestModal<T> {
-	app: unknown;
-	constructor(app: unknown) { this.app = app; }
-	open() {}
-	close() {}
+	public app: unknown;
+	protected declare items: T[];
+	public constructor(app: unknown) { this.app = app; }
+	public open(): void {}
+	public close(): void {}
 }
 export class SuggestModal<T> {
-	app: unknown;
-	constructor(app: unknown) { this.app = app; }
-	open() {}
-	close() {}
+	public app: unknown;
+	protected declare items: T[];
+	public constructor(app: unknown) { this.app = app; }
+	public open(): void {}
+	public close(): void {}
 }
 export class PluginSettingTab {
-	app: unknown;
-	plugin: unknown;
-	containerEl: HTMLElement = document.createElement("div");
-	constructor(app: unknown, plugin: unknown) { this.app = app; this.plugin = plugin; }
+	public app: unknown;
+	public plugin: unknown;
+	public containerEl: HTMLElement = document.createElement("div");
+	public constructor(app: unknown, plugin: unknown) { this.app = app; this.plugin = plugin; }
 }

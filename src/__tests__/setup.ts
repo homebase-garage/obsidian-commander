@@ -1,2 +1,2 @@
-(globalThis as Record<string, unknown>).moment = { locale: () => "en" };
+(globalThis as Record<string, unknown>).moment = { locale: (): string => "en" };
 export {};
