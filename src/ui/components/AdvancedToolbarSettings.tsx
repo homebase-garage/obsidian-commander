@@ -69,7 +69,7 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 		);
 
 	if (Platform.isMobile) {
-		const description = document.createDocumentFragment();
+		const description = createFragment();
 		description.appendChild(createEl("h3", { text: "Custom icons" }));
 		containerEl.appendChild(description);
 
@@ -134,13 +134,13 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 	}
 
 	const advancedEl = containerEl.appendChild(
-		createEl("div", {
+		createDiv({
 			cls: "cmdr-sep-con",
 			attr: { style: "margin-top: 64px" },
 		})
 	);
 	advancedEl.appendChild(
-		createEl("div", {
+		createDiv({
 			text: "Advanced settings",
 			attr: { style: "margin-bottom: 8px; font-weight: bold" },
 		})
