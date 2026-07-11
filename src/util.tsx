@@ -24,7 +24,7 @@ export async function chooseNewCommand(
 	const command = await new AddCommandModal(plugin).awaitSelection();
 
 	let icon;
-	if (!command.hasOwnProperty("icon")) {
+	if (!(Object.prototype.hasOwnProperty.call(command, "icon") as boolean)) {
 		icon = await new ChooseIconModal(plugin).awaitSelection();
 	}
 
@@ -36,7 +36,6 @@ export async function chooseNewCommand(
 	return {
 		id: command.id,
 		//This cannot be undefined anymore
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		icon: icon ?? command.icon!,
 		name: name || command.name,
 		mode: "any",
@@ -59,7 +58,6 @@ export function ObsidianIcon({
 	const iconEl = useRef<HTMLDivElement>(null);
 
 	useLayoutEffect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		setIcon(iconEl.current!, icon);
 	}, [icon, size]);
 
@@ -99,17 +97,10 @@ export function updateHiderStylesheet(settings: CommanderSettings): void {
 }
 
 export async function showConfetti({ target }: MouseEvent): Promise<void> {
-	const myCanvas = activeDocument.createElement("canvas");
+	const myCanvas = createEl("canvas", {
+		cls: "cmdr-confetti-canvas",
+	});
 	activeDocument.body.appendChild(myCanvas);
-	myCanvas.style.position = "fixed";
-	myCanvas.style.width = "100vw";
-	myCanvas.style.height = "100vh";
-	myCanvas.style.top = "0px";
-	myCanvas.style.left = "0px";
-	//@ts-ignore
-	myCanvas.style["pointer-events"] = "none";
-	//@ts-ignore
-	myCanvas.style["z-index"] = "100";
 
 	const myConfetti = confetti.create(myCanvas, {
 		resize: true,
@@ -143,7 +134,6 @@ export function updateMacroCommands(plugin: CommanderPlugin): void {
 		p.startsWith("cmdr:macro-")
 	);
 	for (const command of oldCommands) {
-		//@ts-ignore
 		plugin.app.commands.removeCommand(command);
 	}
 
@@ -154,7 +144,7 @@ export function updateMacroCommands(plugin: CommanderPlugin): void {
 			name: macro.name,
 			icon: macro.icon,
 			callback: () => {
-				plugin.executeMacro(Number(idx));
+				void plugin.executeMacro(Number(idx));
 			},
 		});
 	}

@@ -4,7 +4,6 @@ import { Ref, useEffect, useRef, useState } from "preact/hooks";
 
 interface Props {
 	value: string;
-	// eslint-disable-next-line no-unused-vars
 	handleChange: (e: h.JSX.TargetedKeyboardEvent<HTMLInputElement>) => void;
 	ariaLabel: string;
 }
@@ -46,8 +45,7 @@ export default function ChangeableText({
 			) : (
 				<span
 					onDblClick={({ target }): void => {
-						/* @ts-ignore */
-						setWidth(target?.offsetWidth);
+						setWidth((target as HTMLElement | null)?.offsetWidth ?? 0);
 						setShowInput(true);
 					}}
 					aria-label={ariaLabel}

@@ -26,7 +26,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 		const buttons = this.buttonsFor(leaf, true);
 		if (!buttons || buttons.has(id)) return;
 
-		const buttonIcon = (view as ItemView).addAction(icon, name, () => {
+		const buttonIcon = view.addAction(icon, name, () => {
 			this.plugin.app.workspace.setActiveLeaf(leaf, { focus: true });
 			this.plugin.app.commands.executeCommandById(id);
 		});
@@ -45,7 +45,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 						.setIcon("command")
 						.onClick(async () => {
 							const pair = await chooseNewCommand(this.plugin);
-							this.addCommand(pair);
+							await this.addCommand(pair);
 						});
 				})
 				.addSeparator()
@@ -59,7 +59,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 							if (newIcon && newIcon !== pair.icon) {
 								pair.icon = newIcon;
 								await this.plugin.saveSettings();
-								this.reorder();
+								await this.reorder();
 							}
 						});
 				})
@@ -74,7 +74,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 							if (newName && newName !== pair.name) {
 								pair.name = newName;
 								await this.plugin.saveSettings();
-								this.reorder();
+								await this.reorder();
 							}
 						});
 				})
@@ -89,7 +89,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 									this.plugin
 								).didChooseRemove())
 							) {
-								this.removeCommand(pair);
+								await this.removeCommand(pair);
 							}
 						});
 				})
@@ -108,7 +108,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 			})
 		);
 		this.plugin.app.workspace.onLayoutReady(() =>
-			setTimeout(() => this.addButtonsToAllLeaves(), 100)
+			window.setTimeout(() => this.addButtonsToAllLeaves(), 100)
 		);
 	}
 
@@ -118,7 +118,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 		if (!(view instanceof ItemView)) return;
 		if (this.buttons.get(view)?.has(id)) return;
 		const buttonIcon = view.addAction("plus", t("Add new"), async () => {
-			this.addCommand(await chooseNewCommand(this.plugin));
+			await this.addCommand(await chooseNewCommand(this.plugin));
 		});
 		buttonIcon.addClasses(["cmdr", id]);
 		if (!this.buttons.has(view)) this.buttons.set(view, new Map());
@@ -126,7 +126,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 	}
 
 	private addButtonsToAllLeaves(refresh = false): void {
-		activeWindow.requestAnimationFrame(() =>
+		window.requestAnimationFrame(() =>
 			this.plugin.app.workspace.iterateAllLeaves((leaf) =>
 				this.addButtonsToLeaf(leaf, refresh)
 			)
@@ -134,7 +134,7 @@ export default class PageHeaderManager extends CommandManagerBase {
 	}
 
 	private removeButtonsFromAllLeaves(): void {
-		activeWindow.requestAnimationFrame(() =>
+		window.requestAnimationFrame(() =>
 			this.plugin.app.workspace.iterateAllLeaves((leaf) =>
 				this.removeButtonsFromLeaf(leaf)
 			)

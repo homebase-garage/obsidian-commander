@@ -1,34 +1,82 @@
-import { Notice, Platform, setIcon, Setting } from "obsidian";
+import {
+	ExtraButtonComponent,
+	Notice,
+	Platform,
+	setIcon,
+	Setting,
+	SliderComponent,
+} from "obsidian";
 import { Fragment, h } from "preact";
 import { useEffect, useRef } from "preact/hooks";
+import { DEFAULT_SETTINGS } from "src/constants";
+import t from "src/l10n";
 import CommanderPlugin from "src/main";
 import { injectIcons, ObsidianIcon, updateStyles } from "src/util";
 import ChooseIconModal from "../chooseIconModal";
 
+function addResettableSlider(
+	containerEl: HTMLElement,
+	opts: {
+		name: string;
+		desc: string;
+		min: number;
+		max: number;
+		step: number;
+		value: number;
+		defaultValue: number;
+		onChange: (value: number) => Promise<void>;
+	}
+): void {
+	let resetBtn: ExtraButtonComponent;
+	let slider: SliderComponent;
+	new Setting(containerEl)
+		.setName(opts.name)
+		.setDesc(opts.desc)
+		.addSlider((cb) => {
+			slider = cb;
+			cb.setLimits(opts.min, opts.max, opts.step)
+				.setValue(opts.value)
+				.setDynamicTooltip()
+				.onChange(async (value) => {
+					await opts.onChange(value);
+					resetBtn.setDisabled(value === opts.defaultValue);
+				});
+		})
+		.addExtraButton((bt) => {
+			resetBtn = bt;
+			bt.setIcon("reset")
+				.setTooltip(t("Restore default"))
+				.setDisabled(opts.value === opts.defaultValue)
+				.onClick(async () => {
+					slider.setValue(opts.defaultValue);
+					await opts.onChange(opts.defaultValue);
+					resetBtn.setDisabled(true);
+				});
+		});
+}
+
 function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 	containerEl.empty();
 
-	new Setting(containerEl)
-		.setName("Toolbar Row Count")
-		.setDesc(
-			"Set how many Rows the Mobile Toolbar should have. Set this to 0 to remove the Toolbar."
-		)
-		.addSlider((cb) =>
-			cb
-				.setLimits(0, 5, 1)
-				.setValue(plugin.settings.advancedToolbar.rowCount)
-				.setDynamicTooltip()
-				.onChange(async (value) => {
-					plugin.settings.advancedToolbar.rowCount = value;
-					await plugin.saveSettings();
-					updateStyles(plugin.settings.advancedToolbar);
-				})
-		);
+	addResettableSlider(containerEl, {
+		name: "Toolbar row count",
+		desc: "Set how many rows the mobile toolbar should have. Set this to 0 to remove the toolbar.",
+		min: 0,
+		max: 5,
+		step: 1,
+		value: plugin.settings.advancedToolbar.rowCount,
+		defaultValue: DEFAULT_SETTINGS.advancedToolbar.rowCount,
+		onChange: async (value) => {
+			plugin.settings.advancedToolbar.rowCount = value;
+			await plugin.saveSettings();
+			updateStyles(plugin.settings.advancedToolbar);
+		},
+	});
 
 	new Setting(containerEl)
-		.setName("Column Layout")
+		.setName("Column layout")
 		.setDesc(
-			"Use a column based layout instead of the default row. This makes it easier to arrange the Commands."
+			"Use a column based layout instead of the default row. This makes it easier to arrange the commands."
 		)
 		.addToggle((cb) =>
 			cb
@@ -51,26 +99,24 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 	// 			})
 	// 	})
 
-	new Setting(containerEl)
-		.setName("Bottom Offset")
-		.setDesc(
-			"Offset the Toolbar from the Bottom of the Screen. This is useful if the toolbar is partially obscured by other UI Elements."
-		)
-		.addSlider((cb) =>
-			cb
-				.setLimits(0, 32, 1)
-				.setValue(plugin.settings.advancedToolbar.heightOffset)
-				.setDynamicTooltip()
-				.onChange(async (value) => {
-					plugin.settings.advancedToolbar.heightOffset = value;
-					await plugin.saveSettings();
-					updateStyles(plugin.settings.advancedToolbar);
-				})
-		);
+	addResettableSlider(containerEl, {
+		name: "Bottom offset",
+		desc: "Offset the toolbar from the bottom of the screen. This is useful if the toolbar is partially obscured by other UI elements.",
+		min: 0,
+		max: 32,
+		step: 1,
+		value: plugin.settings.advancedToolbar.heightOffset,
+		defaultValue: DEFAULT_SETTINGS.advancedToolbar.heightOffset,
+		onChange: async (value) => {
+			plugin.settings.advancedToolbar.heightOffset = value;
+			await plugin.saveSettings();
+			updateStyles(plugin.settings.advancedToolbar);
+		},
+	});
 
 	if (Platform.isMobile) {
-		const description = document.createDocumentFragment();
-		description.appendChild(createEl("h3", { text: "Custom Icons" }));
+		const description = createFragment();
+		description.appendChild(createEl("h3", { text: "Custom icons" }));
 		containerEl.appendChild(description);
 
 		plugin.getCommandsWithoutIcons().forEach((command) => {
@@ -90,7 +136,7 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 							)?.iconID;
 						currentIcon
 							? setIcon(iconDiv, currentIcon)
-							: bt.setButtonText("No Icon");
+							: bt.setButtonText("No icon");
 					}
 					bt.onClick(async () => {
 						const icon = await new ChooseIconModal(
@@ -115,7 +161,7 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 				})
 				.addExtraButton((bt) => {
 					bt.setIcon("reset")
-						.setTooltip("Reset to default - Requires a restart")
+						.setTooltip("Reset to default - requires a restart")
 						.onClick(async () => {
 							plugin.settings.advancedToolbar.mappedIcons =
 								plugin.settings.advancedToolbar.mappedIcons.filter(
@@ -126,7 +172,7 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 							await plugin.saveSettings();
 							render(containerEl, plugin);
 							new Notice(
-								"If the default Icon doesn't appear, you might have to restart Obsidian."
+								"If the default icon doesn't appear, you might have to restart Obsidian."
 							);
 						});
 				});
@@ -134,22 +180,22 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 	}
 
 	const advancedEl = containerEl.appendChild(
-		createEl("div", {
+		createDiv({
 			cls: "cmdr-sep-con",
 			attr: { style: "margin-top: 64px" },
 		})
 	);
 	advancedEl.appendChild(
-		createEl("div", {
-			text: "Advanced Settings",
+		createDiv({
+			text: "Advanced settings",
 			attr: { style: "margin-bottom: 8px; font-weight: bold" },
 		})
 	);
 
 	new Setting(advancedEl)
-		.setName("Button Height")
+		.setName("Button height")
 		.setDesc(
-			"Change the Height of each Button inside the Mobile Toolbar (in px)."
+			"Change the height of each button inside the mobile toolbar (in px)."
 		)
 		.addText((cb) =>
 			cb
@@ -170,9 +216,9 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 				})
 		);
 	new Setting(advancedEl)
-		.setName("Button Width")
+		.setName("Button width")
 		.setDesc(
-			"Change the Width of each Button inside the Mobile Toolbar (in px)."
+			"Change the width of each button inside the mobile toolbar (in px)."
 		)
 		.addText((cb) =>
 			cb
@@ -192,22 +238,20 @@ function render(containerEl: HTMLElement, plugin: CommanderPlugin): void {
 					}
 				})
 		);
-	new Setting(advancedEl)
-		.setName("Toolbar Extra Spacing")
-		.setDesc(
-			"Some Themes need extra spacing in the toolbar. If your Toolbar doesn't wrap properly, try increasing this value."
-		)
-		.addSlider((cb) =>
-			cb
-				.setLimits(0, 64, 1)
-				.setValue(plugin.settings.advancedToolbar.spacing)
-				.setDynamicTooltip()
-				.onChange(async (value) => {
-					plugin.settings.advancedToolbar.spacing = value;
-					await plugin.saveSettings();
-					updateStyles(plugin.settings.advancedToolbar);
-				})
-		);
+	addResettableSlider(advancedEl, {
+		name: "Toolbar extra spacing",
+		desc: "Some themes need extra spacing in the toolbar. If your toolbar doesn't wrap properly, try increasing this value.",
+		min: 0,
+		max: 64,
+		step: 1,
+		value: plugin.settings.advancedToolbar.spacing,
+		defaultValue: DEFAULT_SETTINGS.advancedToolbar.spacing,
+		onChange: async (value) => {
+			plugin.settings.advancedToolbar.spacing = value;
+			await plugin.saveSettings();
+			updateStyles(plugin.settings.advancedToolbar);
+		},
+	});
 }
 
 export default function AdvancedToolbarSettings({
@@ -221,7 +265,9 @@ export default function AdvancedToolbarSettings({
 		if (ref.current) {
 			render(ref.current, plugin);
 		}
-		return () => ref.current && ref.current.empty();
+		return (): void => {
+			ref.current && ref.current.empty();
+		};
 	}, []);
 
 	return (
@@ -251,7 +297,11 @@ export default function AdvancedToolbarSettings({
 					</button>
 				)}
 			</div>
-			<div ref={ref} style={{ paddingBottom: "128px" }} />
+			<div
+				ref={ref}
+				className="cmdr-advanced-toolbar-settings"
+				style={{ paddingBottom: "128px" }}
+			/>
 		</Fragment>
 	);
 }

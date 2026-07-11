@@ -10,10 +10,8 @@ export default abstract class CommandManagerBase {
 		this.pairs = pairArray;
 	}
 
-	// eslint-disable-next-line no-unused-vars
 	public abstract addCommand(pair: CommandIconPair): Promise<void> | void;
 
-	// eslint-disable-next-line no-unused-vars
 	public abstract removeCommand(pair: CommandIconPair): Promise<void> | void;
 
 	public abstract reorder(): Promise<void> | void;

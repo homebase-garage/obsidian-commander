@@ -4,14 +4,12 @@ import CommanderPlugin from "src/main";
 
 export default class ChooseCustomNameModal extends SuggestModal<string> {
 	public constructor(
-		// eslint-disable-next-line no-unused-vars
 		private defaultName: string,
-		// eslint-disable-next-line no-unused-vars
 		private plugin: CommanderPlugin
 	) {
 		super(plugin.app);
 		this.setPlaceholder(t("Use a custom name"));
-		this.resultContainerEl.style.display = "none";
+		this.resultContainerEl.addClass("cmdr-hide-suggestions");
 
 		this.setInstructions([
 			{
@@ -30,13 +28,13 @@ export default class ChooseCustomNameModal extends SuggestModal<string> {
 	}
 
 	public onOpen(): void {
-		super.onOpen();
+		void super.onOpen();
 
 		this.inputEl.value = this.defaultName;
 		const wrapper = createDiv({ cls: "cmdr-name-input-wrapper" });
 		this.inputEl.parentNode?.insertBefore(wrapper, this.inputEl);
 		wrapper.appendChild(this.inputEl);
-		wrapper.parentElement!.style.display = "block";
+		wrapper.parentElement!.addClass("cmdr-name-input-wrapper-parent");
 
 		const btn = createEl("button", { text: t("Save"), cls: "mod-cta" });
 		btn.onclick = (e): void => this.selectSuggestion(this.inputEl.value, e);
@@ -49,7 +47,7 @@ export default class ChooseCustomNameModal extends SuggestModal<string> {
 			this.onChooseSuggestion = (item): void => resolve(item);
 			//This is wrapped inside a setTimeout, because onClose is called before onChooseItem
 			this.onClose = (): number =>
-				window.setTimeout(() => reject("No Name selected"), 0);
+				window.setTimeout(() => reject(new Error("No Name selected")), 0);
 		});
 	}
 
@@ -58,14 +56,14 @@ export default class ChooseCustomNameModal extends SuggestModal<string> {
 	}
 
 	// This isn't needed, since we just want a text field without options
-	// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-empty-function
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- intentionally a no-op, only a text field is needed
 	public renderSuggestion(value: string, el: HTMLElement): void {}
 
 	// This will be overriden anyway, but typescript complains if it's not declared
-	/* eslint-disable no-unused-vars, @typescript-eslint/no-empty-function */
+	/* eslint-disable @typescript-eslint/no-empty-function -- overridden by awaitSelection, declared only to satisfy the type */
 	public onChooseSuggestion(
 		item: string,
 		evt: MouseEvent | KeyboardEvent
 	): void {}
-	/* eslint-enable no-unused-vars, @typescript-eslint/no-empty-function */
+	/* eslint-enable @typescript-eslint/no-empty-function -- overridden by awaitSelection, declared only to satisfy the type */
 }

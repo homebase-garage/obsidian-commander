@@ -26,7 +26,6 @@ export default class TitleBarManager extends CommandManagerBase {
 
 	private init(): void {
 		this.plugin.app.workspace.onLayoutReady(async () => {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			this.container = document.querySelector(
 				".titlebar div.titlebar-button-container.mod-right"
 			)!;
@@ -37,17 +36,17 @@ export default class TitleBarManager extends CommandManagerBase {
 				}
 
 				if (isModeActive(cmd.mode, this.plugin)) {
-					this.addTitleBarAction(cmd);
+					await this.addTitleBarAction(cmd);
 				}
 			}
-			this.plugin.saveSettings();
+			await this.plugin.saveSettings();
 
 			this.plugin.register(() => this.addBtn.remove());
 			this.addBtn.style.setProperty("--icon-size", `12px`);
 			setIcon(this.addBtn, "plus");
 			this.addBtn.onclick = async (): Promise<void> => {
 				const pair = await chooseNewCommand(this.plugin);
-				this.addCommand(pair);
+				await this.addCommand(pair);
 				this.reorder();
 			};
 			if (this.plugin.settings.showAddCommand)
@@ -63,7 +62,7 @@ export default class TitleBarManager extends CommandManagerBase {
 
 	public async addCommand(pair: CommandIconPair): Promise<void> {
 		this.pairs.push(pair);
-		this.addTitleBarAction(pair);
+		await this.addTitleBarAction(pair);
 		await this.plugin.saveSettings();
 	}
 
@@ -92,7 +91,7 @@ export default class TitleBarManager extends CommandManagerBase {
 						this.plugin
 					).didChooseRemove())
 				) {
-					this.removeCommand(pair);
+					await this.removeCommand(pair);
 				}
 			};
 		};
@@ -117,7 +116,7 @@ export default class TitleBarManager extends CommandManagerBase {
 						.setIcon("command")
 						.onClick(async () => {
 							const pair = await chooseNewCommand(this.plugin);
-							this.addCommand(pair);
+							await this.addCommand(pair);
 						});
 				})
 				.addSeparator()
@@ -161,7 +160,7 @@ export default class TitleBarManager extends CommandManagerBase {
 									this.plugin
 								).didChooseRemove())
 							) {
-								this.removeCommand(pair);
+								await this.removeCommand(pair);
 							}
 						});
 				})
@@ -189,7 +188,7 @@ export default class TitleBarManager extends CommandManagerBase {
 		}
 
 		action.addClass("cmdr-ribbon-removing");
-		action.addEventListener("transitionend", async () => {
+		action.addEventListener("transitionend", () => {
 			action.remove();
 			this.actions.delete(pair);
 		});

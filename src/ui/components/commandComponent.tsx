@@ -15,11 +15,8 @@ interface CommandViewerProps {
 	handleUp: () => void;
 	handleDown: () => void;
 	handleNewIcon: () => void;
-	// eslint-disable-next-line no-unused-vars
 	handleRename: (_name: string) => void;
-	// eslint-disable-next-line no-unused-vars
 	handleModeChange: (_mode?: string) => void;
-	// eslint-disable-next-line no-unused-vars
 	handleColorChange: (_color?: string) => void;
 	sortable?: boolean;
 }
@@ -100,12 +97,11 @@ export default function CommandComponent({
 		);
 	}
 	const owningPluginID = cmd.id.split(":").first();
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const owningPlugin = plugin.app.plugins.manifests[owningPluginID!];
 	const isInternal = !owningPlugin;
 	const isChecked =
-		cmd.hasOwnProperty("checkCallback") ||
-		cmd.hasOwnProperty("editorCheckCallback");
+		(Object.prototype.hasOwnProperty.call(cmd, "checkCallback") as boolean) ||
+		(Object.prototype.hasOwnProperty.call(cmd, "editorCheckCallback") as boolean);
 
 	const modeIcon = getModeIcon(pair.mode);
 	const modeName = pair.mode.match(/desktop|mobile|any/)
@@ -128,8 +124,9 @@ export default function CommandComponent({
 							<ChangeableText
 								ariaLabel={t("Double click to rename")}
 								handleChange={({ target }): void => {
-									/* @ts-ignore */
-									handleRename(target?.value);
+									handleRename(
+										(target as HTMLInputElement | null)?.value ?? ""
+									);
 								}}
 								value={pair.name}
 							/>

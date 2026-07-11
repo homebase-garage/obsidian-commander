@@ -68,6 +68,7 @@
 	"Hide": "隐藏",
 	"Hide other Commands": "隐藏其余命令",
 	"Double click to enter custom value": "双击以添加自定义值",
+	"Restore default": "Restore default",
 	"Choose custom spacing for Command Buttons": "为命令按钮选择自定义间距",
 	"Change the spacing between commands. You can set different values on mobile and desktop.": "改变命令之间的间距。你可以为移动和桌面设备设置不同的值。",
 	"Warning": "警告",
