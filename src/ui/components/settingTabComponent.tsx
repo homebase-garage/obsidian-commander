@@ -1,6 +1,7 @@
 import { Platform } from "obsidian";
 import { Fragment, h } from "preact";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { DEFAULT_SETTINGS } from "src/constants";
 import t from "src/l10n";
 import { Tab } from "src/types";
 import { ObsidianIcon, updateSpacing } from "src/util";
@@ -98,6 +99,7 @@ export default function settingTabComponent({
 						/>
 						<SliderComponent
 							value={plugin.settings.spacing}
+							defaultValue={DEFAULT_SETTINGS.spacing}
 							name={t(
 								"Choose custom spacing for Command Buttons"
 							)}

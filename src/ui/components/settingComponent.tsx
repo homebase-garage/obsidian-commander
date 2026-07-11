@@ -90,7 +90,13 @@ export function EyeToggleComponent({
 	);
 }
 
-export function SliderComponent(props: SettingProps<number>): h.JSX.Element {
+interface SliderProps extends SettingProps<number> {
+	defaultValue?: number;
+}
+export function SliderComponent({
+	defaultValue,
+	...props
+}: SliderProps): h.JSX.Element {
 	const [val, setVal] = useState(props.value);
 
 	return (
@@ -99,7 +105,19 @@ export function SliderComponent(props: SettingProps<number>): h.JSX.Element {
 			name={props.name}
 			className="cmdr-slider"
 		>
-			<div>
+			<div class="cmdr-flex cmdr-items-center">
+				{defaultValue !== undefined && (
+					<ObsidianIcon
+						aria-label={t("Restore default")}
+						icon="reset"
+						size={16}
+						className="clickable-icon"
+						onClick={(): void => {
+							setVal(defaultValue);
+							props.changeHandler(defaultValue);
+						}}
+					/>
+				)}
 				<ChangeableText
 					ariaLabel={t("Double click to enter custom value")}
 					value={val.toString()}
