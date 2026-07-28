@@ -11,9 +11,9 @@ export default class LeftRibbonManager extends CommandManagerBase {
 		super(plugin, plugin.settings.leftRibbon);
 		this.plugin = plugin;
 
-		this.plugin.settings.leftRibbon.forEach((pair) =>
-			this.addCommand(pair, false)
-		);
+		this.plugin.settings.leftRibbon.forEach((pair) => {
+			void this.addCommand(pair, false);
+		});
 
 		this.plugin.app.workspace.onLayoutReady(() => {
 			// if (this.plugin.settings.showAddCommand) {
@@ -36,10 +36,8 @@ export default class LeftRibbonManager extends CommandManagerBase {
 			this.plugin.addRibbonIcon(pair.icon, pair.name, () =>
 				this.plugin.app.commands.executeCommandById(pair.id)
 			);
-			// @ts-expect-error
 			const nativeAction = this.plugin.app.workspace.leftRibbon.items.find(
-				// @ts-expect-error
-				(i) => i.icon === pair.icon && i.name === i.name
+				(i) => i.icon === pair.icon && i.title === pair.name
 			);
 			if (nativeAction) {
 				nativeAction.buttonEl.style.color =
@@ -59,23 +57,19 @@ export default class LeftRibbonManager extends CommandManagerBase {
 			this.plugin.settings.leftRibbon.remove(pair);
 			await this.plugin.saveSettings();
 		}
-		// @ts-expect-error
 		const nativeAction = this.plugin.app.workspace.leftRibbon.items.find(
-			// @ts-expect-error
-			(i) => i.icon === pair.icon && i.name === i.name
+			(i) => i.icon === pair.icon && i.title === pair.name
 		);
 		if (nativeAction) {
 			nativeAction.buttonEl.remove();
+			this.plugin.app.workspace.leftRibbon.items.remove(nativeAction);
 		}
-		// @ts-expect-error
-		app.workspace.leftRibbon.items.remove(nativeAction);
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	public reorder(): void {
 		this.plugin.settings.leftRibbon.forEach((pair) => {
-			this.removeCommand(pair, false);
-			this.addCommand(pair, false);
+			void this.removeCommand(pair, false);
+			void this.addCommand(pair, false);
 		});
 	}
 }

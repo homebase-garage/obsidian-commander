@@ -29,28 +29,24 @@ abstract class Base extends CommandManagerBase {
 	}
 
 	// There is no state to update
-	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	// eslint-disable-next-line @typescript-eslint/no-empty-function -- no state to update
 	public reorder(): void {}
 
 	protected addRemovableCommand(
-		// eslint-disable-next-line no-unused-vars
-		this: (_item: MenuItem) => void,
 		command: Command,
 		cmdPair: CommandIconPair,
 		plugin: CommanderPlugin,
 		menu: Menu,
 		commandList: CommandIconPair[]
-	// eslint-disable-next-line no-unused-vars
 	): (_item: MenuItem) => void {
 		return (item: MenuItem) => {
-			item.dom.addClass("cmdr");
+			item.dom.addClass("cmdr", "cmdr-menu-item");
 			item.dom.style.color =
 				cmdPair.color === "#000000" || cmdPair.color === undefined
 					? "inherit"
 					: cmdPair.color;
 			item.setSection("cmdr");
 
-			item.dom.style.display = "flex";
 			const optionEl = createDiv({
 				cls: "cmdr-menu-more-options",
 			});
@@ -99,7 +95,7 @@ abstract class Base extends CommandManagerBase {
 											plugin
 										).didChooseRemove())
 									) {
-										removeMenu();
+										await removeMenu();
 									}
 								});
 						})
@@ -120,10 +116,10 @@ abstract class Base extends CommandManagerBase {
 
 			let isRemovable = false;
 			const setNormal = (): void => {
-				optionEl.style.display = "none";
+				optionEl.removeClass("is-visible");
 			};
 			const setRemovable = (): void => {
-				optionEl.style.display = "block";
+				optionEl.addClass("is-visible");
 			};
 			const removeMenu = async (): Promise<void> => {
 				item.dom.addClass("cmdr-removing");
@@ -164,9 +160,8 @@ abstract class Base extends CommandManagerBase {
 							const pair = await chooseNewCommand(plugin);
 							commandList.push(pair);
 							await plugin.saveSettings();
-						} catch (error) {
-							//Do some proper handling here
-							console.log(error);
+						} catch {
+							// User cancelled command/icon selection, nothing to do
 						}
 					});
 			});
@@ -200,8 +195,7 @@ export class EditorMenuCommandManager extends Base {
 					continue;
 
 				menu.addItem(
-					this.addRemovableCommand.call(
-						this,
+					this.addRemovableCommand(
 						command,
 						cmdPair,
 						plugin,
@@ -256,8 +250,7 @@ export class FileMenuCommandManager extends Base {
 				}
 
 				menu.addItem(
-					this.addRemovableCommand.call(
-						this,
+					this.addRemovableCommand(
 						command,
 						cmdPair,
 						plugin,

@@ -128,7 +128,7 @@ export default class ExplorerManager extends CommandManagerBase {
 						this.plugin
 					).didChooseRemove())
 				) {
-					this.removeCommand(pair);
+					await this.removeCommand(pair);
 				}
 			};
 		};
@@ -153,7 +153,7 @@ export default class ExplorerManager extends CommandManagerBase {
 						.setIcon("command")
 						.onClick(async () => {
 							const pair = await chooseNewCommand(this.plugin);
-							this.addCommand(pair);
+							await this.addCommand(pair);
 						});
 				})
 				.addSeparator()
@@ -197,7 +197,7 @@ export default class ExplorerManager extends CommandManagerBase {
 									this.plugin
 								).didChooseRemove())
 							) {
-								this.removeCommand(pair);
+								await this.removeCommand(pair);
 							}
 						});
 				})
@@ -221,7 +221,7 @@ export default class ExplorerManager extends CommandManagerBase {
 		}
 
 		action.addClass("cmdr-ribbon-removing");
-		action.addEventListener("transitionend", async () => {
+		action.addEventListener("transitionend", () => {
 			action.remove();
 			this.actions.delete(pair);
 		});

@@ -1,6 +1,7 @@
 import { Platform } from "obsidian";
 import { Fragment, h } from "preact";
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
+import { DEFAULT_SETTINGS } from "src/constants";
 import t from "src/l10n";
 import { Tab } from "src/types";
 import { ObsidianIcon, updateSpacing } from "src/util";
@@ -37,18 +38,16 @@ export default function settingTabComponent({
 
 	useEffect(() => {
 		addEventListener("keydown", tabToNextTab);
-		return () => removeEventListener("keydown", tabToNextTab);
+		return (): void => removeEventListener("keydown", tabToNextTab);
 	}, [activeTab]);
 
 	//This is used to remove the initial onclick event listener.
 	if (Platform.isMobile) {
 		useEffect(() => {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			const old_element = document.querySelector(
 				".modal-setting-back-button"
 			)!;
 			const new_element = old_element.cloneNode(true);
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			old_element.parentNode!.replaceChild(new_element, old_element);
 			setOpen(true);
 		}, []);
@@ -61,11 +60,9 @@ export default function settingTabComponent({
 		if (!el) return;
 
 		if (!open) {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			el.parentElement!.lastChild!.textContent = tabs[activeTab].name;
 			el.onclick = (): void => setOpen(true);
 		} else {
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			el.parentElement!.lastChild!.textContent = "Commander";
 			el.onclick = (): void => plugin.app.setting.closeActiveTab();
 		}
@@ -96,12 +93,13 @@ export default function settingTabComponent({
 							}
 							changeHandler={async (value): Promise<void> => {
 								plugin.settings.showAddCommand = !value;
-								plugin.manager.pageHeader.reorder();
+								await plugin.manager.pageHeader.reorder();
 								await plugin.saveSettings();
 							}}
 						/>
 						<SliderComponent
 							value={plugin.settings.spacing}
+							defaultValue={DEFAULT_SETTINGS.spacing}
 							name={t(
 								"Choose custom spacing for Command Buttons"
 							)}
@@ -172,7 +170,7 @@ export default function settingTabComponent({
 							<button
 								onClick={(): void => {
 									plugin.app.setting.openTabById("appearance");
-									setTimeout(() => {
+									window.setTimeout(() => {
 										plugin.app.setting.activeTab.containerEl.scroll(
 											{
 												behavior: "smooth",
@@ -180,14 +178,14 @@ export default function settingTabComponent({
 											}
 										);
 
-										plugin.app.setting.activeTab.containerEl
-											.querySelectorAll(
-												".setting-item-heading"
-											)[1]
-											// @ts-ignore
-											.nextSibling?.nextSibling?.nextSibling?.addClass?.(
-												"cmdr-cta"
-											);
+										(
+											plugin.app.setting.activeTab.containerEl
+												.querySelectorAll(
+													".setting-item-heading"
+												)[1]
+												.nextSibling?.nextSibling
+												?.nextSibling as HTMLElement | null
+										)?.addClass?.("cmdr-cta");
 									}, 50);
 								}}
 								className="mod-cta"
@@ -323,9 +321,7 @@ export default function settingTabComponent({
 interface TabHeaderProps {
 	tabs: Tab[];
 	activeTab: number;
-	// eslint-disable-next-line no-unused-vars
 	setActiveTab: (idx: number) => void;
-	// eslint-disable-next-line no-unused-vars
 	setOpen: (open: boolean) => void;
 }
 export function TabHeader({
@@ -348,7 +344,7 @@ export function TabHeader({
 		}
 
 		el.addEventListener("wheel", handleScroll);
-		return () => el.removeEventListener("wheel", handleScroll);
+		return (): void => el.removeEventListener("wheel", handleScroll);
 	}, []);
 
 	useEffect(

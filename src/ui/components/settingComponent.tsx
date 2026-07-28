@@ -30,7 +30,6 @@ function BaseComponent({
 interface SettingProps<T> {
 	name: string;
 	description: string;
-	// eslint-disable-next-line no-unused-vars
 	changeHandler: (value: T) => void;
 	value: T;
 	min?: number;
@@ -91,7 +90,13 @@ export function EyeToggleComponent({
 	);
 }
 
-export function SliderComponent(props: SettingProps<number>): h.JSX.Element {
+interface SliderProps extends SettingProps<number> {
+	defaultValue?: number;
+}
+export function SliderComponent({
+	defaultValue,
+	...props
+}: SliderProps): h.JSX.Element {
 	const [val, setVal] = useState(props.value);
 
 	return (
@@ -100,7 +105,26 @@ export function SliderComponent(props: SettingProps<number>): h.JSX.Element {
 			name={props.name}
 			className="cmdr-slider"
 		>
-			<div>
+			<div class="cmdr-flex cmdr-items-center">
+				{defaultValue !== undefined && (
+					<ObsidianIcon
+						aria-label={t("Restore default")}
+						icon="reset"
+						size={16}
+						className={`clickable-icon${
+							val === defaultValue ? " is-disabled" : ""
+						}`}
+						aria-disabled={val === defaultValue}
+						onClick={
+							val === defaultValue
+								? undefined
+								: (): void => {
+										setVal(defaultValue);
+										props.changeHandler(defaultValue);
+									}
+						}
+					/>
+				)}
 				<ChangeableText
 					ariaLabel={t("Double click to enter custom value")}
 					value={val.toString()}
@@ -121,12 +145,10 @@ export function SliderComponent(props: SettingProps<number>): h.JSX.Element {
 					step={props.step ?? "1"}
 					value={val}
 					onPointerMove={({ target }): void => {
-						{/*@ts-expect-error*/}
-						if (val !== target.value) {
-							{/*@ts-expect-error*/}
-							setVal(target.value);
-							{/*@ts-expect-error*/}
-							props.changeHandler(target.value);
+						const value = Number((target as HTMLInputElement).value);
+						if (!isNaN(value) && val !== value) {
+							setVal(value);
+							props.changeHandler(value);
 						}
 					}}
 				/>

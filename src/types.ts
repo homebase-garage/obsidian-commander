@@ -1,13 +1,12 @@
 import { h } from "preact";
+import { Command, PluginManifest } from "obsidian";
 
-/* eslint-disable no-unused-vars */
 export enum Action {
 	COMMAND,
 	DELAY,
 	EDITOR,
 	LOOP,
 }
-/* eslint-enable no-unused-vars */
 
 export type MacroItem =
 	| { action: Action.COMMAND; commandId: string }
@@ -63,7 +62,7 @@ export interface Tab {
 	tab: h.JSX.Element;
 }
 
-export type Mode = "desktop" | "any" | "mobile" | string;
+export type Mode = "desktop" | "any" | "mobile" | (string & {});
 
 export interface CommandIconPair {
 	id: string;
@@ -73,7 +72,6 @@ export interface CommandIconPair {
 	color?: string;
 }
 
-/* eslint-disable no-unused-vars */
 declare module "obsidian" {
 	interface MenuItem {
 		dom: HTMLElement;
@@ -85,6 +83,7 @@ declare module "obsidian" {
 				[id: string]: Command;
 			};
 			executeCommandById: (id: string) => void;
+			removeCommand: (id: string) => void;
 		};
 		plugins: {
 			manifests: {
@@ -111,6 +110,11 @@ declare module "obsidian" {
 			title: string;
 			callback: () => void;
 		}[];
+		items: {
+			icon: string;
+			title: string;
+			buttonEl: HTMLElement;
+		}[];
 		collapseButtonEl: HTMLElement;
 		ribbonItemsEl: HTMLElement;
 		addRibbonItemButton: (
@@ -127,5 +131,9 @@ declare module "obsidian" {
 
 	interface WorkspaceLeaf {
 		containerEl: HTMLElement;
+	}
+
+	interface Vault {
+		getConfig(key: string): unknown;
 	}
 }
